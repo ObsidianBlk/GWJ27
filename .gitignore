@@ -7,3 +7,7 @@ export_presets.cfg
 # Don't include distribution
 Dist/*
 
+# Ignore "work" directory
+work/*
+
+
