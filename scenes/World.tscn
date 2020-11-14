@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://objects/tilesets/House_Tileset.tres" type="TileSet" id=1]
+[ext_resource path="res://objects/player/Player.gd" type="Script" id=2]
+[ext_resource path="res://objects/player/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://objects/camera/Camera.tscn" type="PackedScene" id=4]
+
+[node name="World" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+format = 1
+tile_data = PoolIntArray( -131071, 1, 0, -131070, 2, 0, -131069, 2, 0, -131068, 2, 0, -131067, 3, 0, -65535, 0, 0, -65534, 0, 1, -65533, 0, 1, -65532, 0, 1, -65531, 0, 2, -65530, 3, 0, 1, 0, 65536, 2, 0, 65537, 3, 0, 65537, 4, 0, 65537, 5, 0, 65537, 6, 0, 2, 7, 1, 0, 8, 2, 0, 9, 2, 0, 10, 3, 0, 65537, 0, 65536, 65538, 0, 65537, 65539, 0, 65537, 65540, 0, 65537, 65541, 0, 65537, 65542, 0, 65538, 65543, 4, 0, 65544, 4, 1, 65545, 4, 1, 65546, 4, 2, 131073, 0, 65536, 131074, 0, 65537, 131075, 0, 65537, 131076, 0, 65537, 131077, 0, 65537, 131078, 0, 65538, 131080, 2, 0, 196609, 0, 65536, 196610, 0, 65537, 196611, 0, 65537, 196612, 0, 65537, 196613, 0, 65537, 196614, 0, 65538, 196616, 4, 65536, 262145, 0, 65536, 262146, 0, 65537, 262147, 0, 65537, 262148, 0, 65537, 262149, 0, 65537, 262150, 0, 131074, 262152, 4, 196608, 327681, 0, 131072, 327682, 0, 131073, 327683, 0, 131073, 327684, 0, 131073, 327685, 0, 131074 )
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( 264.5, 16.5 )
+script = ExtResource( 2 )
+
+[node name="Camera" parent="." instance=ExtResource( 4 )]
+current = true
+target_path = NodePath("../Player")
+duration = 0.5
