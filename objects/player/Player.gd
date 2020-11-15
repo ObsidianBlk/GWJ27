@@ -62,3 +62,13 @@ func play_animation(anim_name : String):
 
 func current_animation():
 	return $Character/Anim.current_animation
+
+
+func _on_input_disable():
+	$FSM.process_handlers(false)
+
+func _on_input_enable():
+	$FSM.process_handlers(true)
+
+
+

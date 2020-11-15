@@ -5,6 +5,16 @@ export var initial_state : String = ""
 
 var state_map = {}
 var cur_state = null
+var proc_handlers = true
+
+func process_handlers(e : bool = true):
+	proc_handlers = e
+	set_process_input(e)
+	set_process(e)
+	set_physics_process(e)
+
+func processing_handlers():
+	return proc_handlers
 
 func _ready():
 	for child in get_children():

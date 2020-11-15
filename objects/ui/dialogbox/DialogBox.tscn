@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://objects/ui/dialogbox/DialogBox.gd" type="Script" id=1]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://assets/fonts/Excellentia.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+size = 72
+font_data = SubResource( 1 )
+
+[node name="DialogBox" type="MarginContainer"]
+anchor_left = 0.25
+anchor_top = 0.74
+anchor_right = 0.75
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 960.0
+margin_bottom = 280.0
+
+[node name="Label" type="Label" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 40.0
+margin_right = -40.0
+custom_fonts/font = SubResource( 2 )
+custom_constants/line_spacing = -23
+autowrap = true
+max_lines_visible = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
