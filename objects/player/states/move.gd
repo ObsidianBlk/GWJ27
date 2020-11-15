@@ -3,6 +3,7 @@ extends "res://scripts/State.gd"
 
 func enter(host : Node):
 	.enter(host)
+	host.play_animation("run")
 
 func handle_physics(delta):
 	if host.velocity.x == 0:

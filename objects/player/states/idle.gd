@@ -1,6 +1,10 @@
 extends "res://objects/player/states/move.gd"
 
 
+func enter(host : Node):
+	.enter(host)
+	host.play_animation("idle")
+
 func handle_physics(delta):
 	if not host.is_grounded():
 		emit_signal("finished", "fall")
@@ -11,6 +15,7 @@ func handle_physics(delta):
 
 	var dir = _get_direction()
 	if dir != 0:
-		host.move(delta, dir)
-		emit_signal("finished", "move")
-		return
+		if not host.is_against_wall(dir):
+			host.move(delta, dir)
+			emit_signal("finished", "move")
+			return

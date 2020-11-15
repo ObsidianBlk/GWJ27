@@ -4,6 +4,7 @@ extends "res://objects/player/states/move.gd"
 func enter(host : Node):
 	.enter(host)
 	host.jump()
+	host.play_animation("jump")
 
 
 func handle_physics(delta):

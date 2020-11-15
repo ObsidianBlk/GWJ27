@@ -17,8 +17,17 @@ func _ready():
 	jump_power = sqrt(2 * pre_gravity * jump_unit_height) * pixels_per_unit
 	speed = units_per_second * pixels_per_unit
 
+
+func get_facing():
+	if $Character.scale.x < 0:
+		return -1
+	return 1
+
 func move(delta : float, dir : int, multi : float = 1.0):
 	if dir != 0:
+		if dir != get_facing():
+			$Character.scale.x *= -1
+			
 		if (dir > 0 and velocity.x < 0) or (dir < 0 and velocity.x > 0):
 			velocity.x = 0 
 		velocity.x = clamp(velocity.x + (delta * dir * speed * multi), -speed, speed)
@@ -35,7 +44,21 @@ func hit_ceiling():
 func is_grounded():
 	return is_on_floor()
 
+func is_against_wall(dir : int = 0):
+	if dir == 0:
+		return (is_against_wall(-1) or is_against_wall(1))
+	if dir > 0:
+		return ($WallRay_LowerRight.is_colliding() or $WallRay_UpperRight.is_colliding())
+	return ($WallRay_LowerLeft.is_colliding() or $WallRay_UpperLeft.is_colliding())
+
 func update_velocity(snap : bool = false):
 	if snap:
 		return move_and_slide_with_snap(velocity, Vector2.DOWN, Vector2.UP)
 	return move_and_slide(velocity, Vector2.UP)
+
+func play_animation(anim_name : String):
+	if $Character/Anim.has_animation(anim_name):
+		$Character/Anim.play(anim_name)
+
+func current_animation():
+	return $Character/Anim.current_animation
