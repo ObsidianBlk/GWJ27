@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://objects/tilesets/Tilesets.tres" type="TileSet" id=1]
 [ext_resource path="res://objects/ui/dialogbox/DialogBox.tscn" type="PackedScene" id=2]
 [ext_resource path="res://objects/player/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://objects/camera/Camera.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/DialogTrigger.gd" type="Script" id=5]
+[ext_resource path="res://objects/foliage/FlowerA.tscn" type="PackedScene" id=6]
+[ext_resource path="res://objects/foliage/Grass.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -33,6 +35,49 @@ duration = 0.25
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="DialogBox" parent="UI" instance=ExtResource( 2 )]
+
+[node name="FlowerA" parent="." instance=ExtResource( 6 )]
+position = Vector2( 311.957, -128.569 )
+stalk_color = Color( 0.231373, 0.862745, 0.301961, 1 )
+peddle_color = Color( 0.796078, 0.141176, 0.0941176, 1 )
+bulb_color = Color( 0.94902, 0.988235, 0.466667, 1 )
+bloomed = false
+start_growing = true
+
+[node name="Grass" parent="." instance=ExtResource( 7 )]
+position = Vector2( 306.997, -125.449 )
+color = Color( 0.627451, 0.811765, 0.223529, 1 )
+grow_time = 2.0
+bloomed = false
+start_growing = true
+
+[node name="Grass2" parent="." instance=ExtResource( 7 )]
+position = Vector2( 313.353, -125.317 )
+color = Color( 0.627451, 0.811765, 0.223529, 1 )
+grow_time = 2.25
+bloomed = false
+start_growing = true
+
+[node name="Grass3" parent="." instance=ExtResource( 7 )]
+position = Vector2( 319.71, -125.449 )
+color = Color( 0.627451, 0.811765, 0.223529, 1 )
+grow_time = 2.5
+bloomed = false
+start_growing = true
+
+[node name="Grass4" parent="." instance=ExtResource( 7 )]
+position = Vector2( 326.332, -125.449 )
+color = Color( 0.627451, 0.811765, 0.223529, 1 )
+grow_time = 2.75
+bloomed = false
+start_growing = true
+
+[node name="Grass5" parent="." instance=ExtResource( 7 )]
+position = Vector2( 300.772, -125.582 )
+color = Color( 0.627451, 0.811765, 0.223529, 1 )
+grow_time = 3.0
+bloomed = false
+start_growing = true
 [connection signal="body_entered" from="DialogTrigger" to="DialogTrigger" method="_on_DialogTrigger_body_entered" flags=6]
 [connection signal="disable_input" from="UI/DialogBox" to="Player" method="_on_input_disable"]
 [connection signal="enable_input" from="UI/DialogBox" to="Player" method="_on_input_enable"]
