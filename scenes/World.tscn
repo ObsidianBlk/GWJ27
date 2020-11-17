@@ -6,7 +6,7 @@
 [ext_resource path="res://objects/camera/Camera.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/DialogTrigger.gd" type="Script" id=5]
 [ext_resource path="res://objects/foliage/FlowerA.tscn" type="PackedScene" id=6]
-[ext_resource path="res://objects/foliage/Grass.tscn" type="PackedScene" id=7]
+[ext_resource path="res://objects/foliage/FoliageSpawner.tscn" type="PackedScene" id=8]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -24,13 +24,14 @@ script = ExtResource( 5 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DialogTrigger"]
 shape = SubResource( 1 )
 
+[node name="GrassCluster" type="Node2D" parent="."]
+
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 254.986, -335.505 )
 
 [node name="Camera" parent="." instance=ExtResource( 4 )]
 current = true
 target_path = NodePath("../Player")
-duration = 0.25
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -44,40 +45,20 @@ bulb_color = Color( 0.94902, 0.988235, 0.466667, 1 )
 bloomed = false
 start_growing = true
 
-[node name="Grass" parent="." instance=ExtResource( 7 )]
-position = Vector2( 306.997, -125.449 )
-color = Color( 0.627451, 0.811765, 0.223529, 1 )
-grow_time = 2.0
-bloomed = false
-start_growing = true
+[node name="GrassCluster2" type="Node2D" parent="."]
+position = Vector2( -3.77972, 11.3393 )
 
-[node name="Grass2" parent="." instance=ExtResource( 7 )]
-position = Vector2( 313.353, -125.317 )
-color = Color( 0.627451, 0.811765, 0.223529, 1 )
-grow_time = 2.25
-bloomed = false
-start_growing = true
-
-[node name="Grass3" parent="." instance=ExtResource( 7 )]
-position = Vector2( 319.71, -125.449 )
-color = Color( 0.627451, 0.811765, 0.223529, 1 )
-grow_time = 2.5
-bloomed = false
-start_growing = true
-
-[node name="Grass4" parent="." instance=ExtResource( 7 )]
-position = Vector2( 326.332, -125.449 )
-color = Color( 0.627451, 0.811765, 0.223529, 1 )
-grow_time = 2.75
-bloomed = false
-start_growing = true
-
-[node name="Grass5" parent="." instance=ExtResource( 7 )]
-position = Vector2( 300.772, -125.582 )
-color = Color( 0.627451, 0.811765, 0.223529, 1 )
-grow_time = 3.0
-bloomed = false
-start_growing = true
+[node name="FoliageSpawner" parent="." instance=ExtResource( 8 )]
+position = Vector2( 203.939, -125.057 )
+area = 464.0
+anchor = 2
+bg_y_offset = 2.0
+bg_container_path = NodePath("../GrassCluster")
+fg_container_path = NodePath("../GrassCluster2")
+grow_rate = 0.5
+spread = 0.75
+variance = 0.505
+grow_on_start = true
 [connection signal="body_entered" from="DialogTrigger" to="DialogTrigger" method="_on_DialogTrigger_body_entered" flags=6]
 [connection signal="disable_input" from="UI/DialogBox" to="Player" method="_on_input_disable"]
 [connection signal="enable_input" from="UI/DialogBox" to="Player" method="_on_input_enable"]

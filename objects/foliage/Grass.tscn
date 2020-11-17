@@ -1,15 +1,29 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/graphics/misc/Plantlife.png" type="Texture" id=1]
 [ext_resource path="res://objects/foliage/scripts/Grass.gd" type="Script" id=2]
+[ext_resource path="res://material/shaders/wind2d.shader" type="Shader" id=3]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 3 )
+shader_param/speed = 1.0
+shader_param/minStrength = 0.108939
+shader_param/maxStrength = 0.21356
+shader_param/strengthScale = 52.0643
+shader_param/interval = 3.5
+shader_param/detail = 4.0
+shader_param/distortion = 0.241
+shader_param/heightOffset = 0.0
 
 [node name="Grass" type="Node2D"]
 script = ExtResource( 2 )
+wind_variance = 0.2
 
 [node name="cluster" type="Sprite" parent="."]
+material = SubResource( 1 )
 texture = ExtResource( 1 )
-offset = Vector2( 0, -4 )
+offset = Vector2( 0, -16 )
 region_enabled = true
-region_rect = Rect2( 56, 8, 8, 8 )
+region_rect = Rect2( 224, 32, 32, 32 )
 
 [node name="Tween" type="Tween" parent="."]
