@@ -94,4 +94,5 @@ shape = SubResource( 4 )
 [node name="Light2D" type="Light2D" parent="."]
 position = Vector2( 0, -16 )
 texture = ExtResource( 5 )
+mode = 2
 [connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://objects/tilesets/Tilesets.tres" type="TileSet" id=1]
 [ext_resource path="res://objects/ui/dialogbox/DialogBox.tscn" type="PackedScene" id=2]
@@ -9,6 +9,9 @@
 [ext_resource path="res://objects/foliage/FoliageSpawner.tscn" type="PackedScene" id=8]
 
 [sub_resource type="CircleShape2D" id=1]
+
+[sub_resource type="Environment" id=2]
+background_mode = 1
 
 [node name="World" type="Node2D"]
 
@@ -58,10 +61,13 @@ position = Vector2( 425.889, -142.506 )
 position = Vector2( 891.35, -8.40894 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color( 0.0156863, 0.0156863, 0.0156863, 1 )
+color = Color( 0.0156863, 0.0156863, 0.0156863, 0 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )
 [connection signal="disable_input" from="UI/DialogBox" to="Player" method="_on_input_disable"]
 [connection signal="enable_input" from="UI/DialogBox" to="Player" method="_on_input_enable"]
 [connection signal="body_entered" from="DialogTrigger" to="DialogTrigger" method="_on_DialogTrigger_body_entered" flags=6]
-[connection signal="trigger" from="Page" to="FoliageSpawner" method="grow"]
 [connection signal="trigger" from="Page" to="UI/DialogBox" method="show_dialog" binds= [ "You have found the first page player! The world grows!" ]]
+[connection signal="trigger" from="Page" to="FoliageSpawner" method="grow"]
 [connection signal="trigger" from="Page2" to="UI/DialogBox" method="show_dialog" binds= [ "The second page has been taken by you. Well done!" ]]

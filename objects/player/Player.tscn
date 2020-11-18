@@ -1992,3 +1992,4 @@ cast_to = Vector2( 12, 0 )
 [node name="Light2D" type="Light2D" parent="."]
 position = Vector2( 0, -40 )
 texture = ExtResource( 1 )
+mode = 2
