@@ -3,9 +3,21 @@ extends "res://scripts/State.gd"
 
 func enter(host : Node):
 	.enter(host)
-	host.play_animation("run")
+	self.host.play_animation("run")
+
+func resume(host : Node = null):
+	.resume(host)
+	self.host.play_animation("run")
+
+func pause():
+	.pause()
+	host.pause_animation()
+	
 
 func handle_physics(delta):
+	if paused:
+		return
+
 	if host.velocity.x == 0:
 		emit_signal("finished", "idle")
 		return

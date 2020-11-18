@@ -1,5 +1,6 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
+[ext_resource path="res://assets/graphics/effects/light_a.png" type="Texture" id=1]
 [ext_resource path="res://objects/player/Player.gd" type="Script" id=2]
 [ext_resource path="res://scripts/FSM.gd" type="Script" id=3]
 [ext_resource path="res://objects/player/states/idle.gd" type="Script" id=4]
@@ -8,8 +9,11 @@
 [ext_resource path="res://objects/player/states/jump.gd" type="Script" id=7]
 [ext_resource path="res://assets/graphics/Characters/Character_A.png" type="Texture" id=8]
 
-[sub_resource type="Animation" id=1]
-resource_name = "fall"
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 12.0
+height = 64.0
+
+[sub_resource type="Animation" id=2]
 length = 0.25
 loop = true
 step = 0.05
@@ -524,8 +528,7 @@ tracks/50/keys = {
 "times": PoolRealArray( 0, 0.15, 0.3 )
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "idle"
+[sub_resource type="Animation" id=3]
 loop = true
 tracks/0/type = "bezier"
 tracks/0/path = NodePath("Skeleton2D/Hip/Chest/ArmR:rotation_degrees")
@@ -698,8 +701,7 @@ tracks/16/keys = {
 "times": PoolRealArray( 0 )
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "jump"
+[sub_resource type="Animation" id=4]
 length = 0.25
 loop = true
 step = 0.017
@@ -1214,7 +1216,7 @@ tracks/50/keys = {
 "times": PoolRealArray( 0, 0.15, 0.3 )
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 loop = true
 step = 0.0166667
 tracks/0/type = "bezier"
@@ -1728,10 +1730,6 @@ tracks/50/keys = {
 "times": PoolRealArray( 0.945 )
 }
 
-[sub_resource type="CapsuleShape2D" id=5]
-radius = 12.0
-height = 64.0
-
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 1024
 collision_mask = 2567
@@ -1751,6 +1749,10 @@ script = ExtResource( 6 )
 
 [node name="jump" type="Node" parent="FSM"]
 script = ExtResource( 7 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -1.466, -44 )
+shape = SubResource( 1 )
 
 [node name="Character" type="Node2D" parent="."]
 position = Vector2( 0, -40 )
@@ -1962,14 +1964,10 @@ __meta__ = {
 }
 
 [node name="Anim" type="AnimationPlayer" parent="Character"]
-anims/fall = SubResource( 1 )
-anims/idle = SubResource( 2 )
-anims/jump = SubResource( 3 )
-anims/run = SubResource( 4 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -1.466, -44 )
-shape = SubResource( 5 )
+anims/fall = SubResource( 2 )
+anims/idle = SubResource( 3 )
+anims/jump = SubResource( 4 )
+anims/run = SubResource( 5 )
 
 [node name="WallRay_LowerRight" type="RayCast2D" parent="."]
 position = Vector2( 0, -16 )
@@ -1990,3 +1988,7 @@ cast_to = Vector2( -15, 0 )
 position = Vector2( 0, -80 )
 enabled = true
 cast_to = Vector2( 12, 0 )
+
+[node name="Light2D" type="Light2D" parent="."]
+position = Vector2( 0, -40 )
+texture = ExtResource( 1 )

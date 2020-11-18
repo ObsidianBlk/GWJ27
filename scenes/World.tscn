@@ -56,6 +56,9 @@ position = Vector2( 425.889, -142.506 )
 
 [node name="Page2" parent="." instance=ExtResource( 7 )]
 position = Vector2( 891.35, -8.40894 )
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color( 0.0156863, 0.0156863, 0.0156863, 1 )
 [connection signal="disable_input" from="UI/DialogBox" to="Player" method="_on_input_disable"]
 [connection signal="enable_input" from="UI/DialogBox" to="Player" method="_on_input_enable"]
 [connection signal="body_entered" from="DialogTrigger" to="DialogTrigger" method="_on_DialogTrigger_body_entered" flags=6]

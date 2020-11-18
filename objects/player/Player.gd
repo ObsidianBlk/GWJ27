@@ -60,15 +60,21 @@ func play_animation(anim_name : String):
 	if $Character/Anim.has_animation(anim_name):
 		$Character/Anim.play(anim_name)
 
+func pause_animation():
+	if $Character/Anim.is_playing():
+		$Character/Anim.stop(false)
+
 func current_animation():
 	return $Character/Anim.current_animation
 
 
 func _on_input_disable():
-	$FSM.process_handlers(false)
+	$FSM.pause()
+	#$FSM.process_handlers(false)
 
 func _on_input_enable():
-	$FSM.process_handlers(true)
+	$FSM.resume()
+	#$FSM.process_handlers(true)
 
 
 

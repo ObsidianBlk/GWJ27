@@ -5,6 +5,7 @@ export var initial_state : String = ""
 
 var state_map = {}
 var cur_state = null
+var paused = false
 var proc_handlers = true
 
 func process_handlers(e : bool = true):
@@ -15,6 +16,21 @@ func process_handlers(e : bool = true):
 
 func processing_handlers():
 	return proc_handlers
+
+func pause():
+	if not paused:
+		paused = true
+		if cur_state != null:
+			state_map[cur_state].pause()
+
+func resume():
+	if paused:
+		paused = false
+		if cur_state != null:
+			state_map[cur_state].resume()
+
+func is_paused():
+	return paused
 
 func _ready():
 	for child in get_children():
@@ -56,6 +72,8 @@ func _change_state(statename : String):
 		
 		# enter new state
 		state.enter(get_parent())
+		if paused:
+			state.pause()
 	
 	return true
 
