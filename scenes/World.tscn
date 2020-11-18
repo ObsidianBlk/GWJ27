@@ -5,12 +5,16 @@
 [ext_resource path="res://objects/player/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://objects/camera/Camera.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/DialogTrigger.gd" type="Script" id=5]
-[ext_resource path="res://objects/foliage/FlowerA.tscn" type="PackedScene" id=6]
+[ext_resource path="res://objects/page/Page.tscn" type="PackedScene" id=7]
 [ext_resource path="res://objects/foliage/FoliageSpawner.tscn" type="PackedScene" id=8]
 
 [sub_resource type="CircleShape2D" id=1]
 
 [node name="World" type="Node2D"]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="DialogBox" parent="UI" instance=ExtResource( 2 )]
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
@@ -33,18 +37,6 @@ position = Vector2( 254.986, -335.505 )
 current = true
 target_path = NodePath("../Player")
 
-[node name="UI" type="CanvasLayer" parent="."]
-
-[node name="DialogBox" parent="UI" instance=ExtResource( 2 )]
-
-[node name="FlowerA" parent="." instance=ExtResource( 6 )]
-position = Vector2( 311.957, -128.569 )
-stalk_color = Color( 0.231373, 0.862745, 0.301961, 1 )
-peddle_color = Color( 0.796078, 0.141176, 0.0941176, 1 )
-bulb_color = Color( 0.94902, 0.988235, 0.466667, 1 )
-bloomed = false
-start_growing = true
-
 [node name="GrassCluster2" type="Node2D" parent="."]
 position = Vector2( -3.77972, 11.3393 )
 
@@ -56,9 +48,17 @@ bg_y_offset = 2.0
 bg_container_path = NodePath("../GrassCluster")
 fg_container_path = NodePath("../GrassCluster2")
 grow_rate = 0.5
-spread = 0.75
-variance = 0.505
-grow_on_start = true
-[connection signal="body_entered" from="DialogTrigger" to="DialogTrigger" method="_on_DialogTrigger_body_entered" flags=6]
+spread = 0.1
+variance = 0.66
+
+[node name="Page" parent="." instance=ExtResource( 7 )]
+position = Vector2( 425.889, -142.506 )
+
+[node name="Page2" parent="." instance=ExtResource( 7 )]
+position = Vector2( 891.35, -8.40894 )
 [connection signal="disable_input" from="UI/DialogBox" to="Player" method="_on_input_disable"]
 [connection signal="enable_input" from="UI/DialogBox" to="Player" method="_on_input_enable"]
+[connection signal="body_entered" from="DialogTrigger" to="DialogTrigger" method="_on_DialogTrigger_body_entered" flags=6]
+[connection signal="trigger" from="Page" to="FoliageSpawner" method="grow"]
+[connection signal="trigger" from="Page" to="UI/DialogBox" method="show_dialog" binds= [ "You have found the first page player! The world grows!" ]]
+[connection signal="trigger" from="Page2" to="UI/DialogBox" method="show_dialog" binds= [ "The second page has been taken by you. Well done!" ]]

@@ -14,7 +14,6 @@ func _input(event):
 		emit_signal("enable_input")
 
 func show_dialog(text):
-	print("Dialog says hello")
 	if not visible:
 		emit_signal("disable_input")
 		set_process_input(true)
@@ -29,3 +28,7 @@ func get_percent_visible():
 
 func set_percent_visible(p : float):
 	$Panel/Label.percent_visible = clamp(p, 0.0, 1.0)
+
+
+func _on_Page_trigger():
+	pass # Replace with function body.

@@ -57,6 +57,7 @@ move_down={
 2d_physics/layer_1="Walls"
 2d_physics/layer_2="Platforms"
 2d_physics/layer_3="Ridgid Bodies"
+2d_physics/layer_10="Triggers"
 2d_physics/layer_11="Player"
 2d_physics/layer_12="Enemies"
 

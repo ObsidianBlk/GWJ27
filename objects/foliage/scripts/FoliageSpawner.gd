@@ -77,7 +77,6 @@ func _process(delta):
 			return
 
 		spawn_count += delta * grow_rate * grass_to_spawn
-		print(spawn_count)
 		if spawn_count < 1.0:
 			return
 		
