@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/graphics/effects/light_b.png" type="Texture" id=1]
+[ext_resource path="res://assets/graphics/effects/bubble_a.png" type="Texture" id=2]
+[ext_resource path="res://objects/bubble/Bubble.gd" type="Script" id=3]
+
+[node name="Bubble" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Viz" type="Node2D" parent="."]
+
+[node name="Light2D" type="Light2D" parent="Viz"]
+texture = ExtResource( 1 )
+shadow_enabled = true
+
+[node name="Sprite" type="Sprite" parent="Viz"]
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 2 )
+
+[node name="Tween_Wave" type="Tween" parent="."]
+
+[node name="Tween_Death" type="Tween" parent="."]
+
+[node name="Tween_Lift" type="Tween" parent="."]

@@ -1,17 +1,28 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://objects/tilesets/Tilesets.tres" type="TileSet" id=1]
 [ext_resource path="res://objects/ui/dialogbox/DialogBox.tscn" type="PackedScene" id=2]
 [ext_resource path="res://objects/player/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://objects/camera/Camera.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/DialogTrigger.gd" type="Script" id=5]
+[ext_resource path="res://assets/graphics/effects/light_a.png" type="Texture" id=6]
 [ext_resource path="res://objects/page/Page.tscn" type="PackedScene" id=7]
 [ext_resource path="res://objects/foliage/FoliageSpawner.tscn" type="PackedScene" id=8]
 
 [sub_resource type="CircleShape2D" id=1]
 
-[sub_resource type="Environment" id=2]
-background_mode = 1
+[sub_resource type="Shader" id=2]
+code = "shader_type canvas_item;
+
+uniform vec4 color : hint_color = vec4(0.0, 0.0, 0.0, 1.0);
+
+void fragment(){
+	COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 2 )
+shader_param/color = Color( 0, 0, 0, 1 )
 
 [node name="World" type="Node2D"]
 
@@ -33,6 +44,18 @@ shape = SubResource( 1 )
 
 [node name="GrassCluster" type="Node2D" parent="."]
 
+[node name="FoliageSpawner" parent="." instance=ExtResource( 8 )]
+position = Vector2( 203.939, -125.057 )
+area = 410.0
+anchor = 2
+bg_y_offset = 2.0
+bg_container_path = NodePath("../GrassCluster")
+fg_container_path = NodePath("../GrassCluster2")
+grow_rate = 0.5
+spread = 0.755
+variance = 0.66
+grass_color = Color( 0.647059, 0.839216, 0.333333, 1 )
+
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 254.986, -335.505 )
 
@@ -43,17 +66,6 @@ target_path = NodePath("../Player")
 [node name="GrassCluster2" type="Node2D" parent="."]
 position = Vector2( -3.77972, 11.3393 )
 
-[node name="FoliageSpawner" parent="." instance=ExtResource( 8 )]
-position = Vector2( 203.939, -125.057 )
-area = 464.0
-anchor = 2
-bg_y_offset = 2.0
-bg_container_path = NodePath("../GrassCluster")
-fg_container_path = NodePath("../GrassCluster2")
-grow_rate = 0.5
-spread = 0.1
-variance = 0.66
-
 [node name="Page" parent="." instance=ExtResource( 7 )]
 position = Vector2( 425.889, -142.506 )
 
@@ -61,10 +73,22 @@ position = Vector2( 425.889, -142.506 )
 position = Vector2( 891.35, -8.40894 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color( 0.0156863, 0.0156863, 0.0156863, 0 )
+color = Color( 0, 0, 0, 1 )
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 2 )
+[node name="Background" type="CanvasLayer" parent="."]
+follow_viewport_enable = true
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="Background"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Background/ParallaxBackground"]
+motion_mirroring = Vector2( 1024, 640 )
+
+[node name="Sprite" type="Sprite" parent="Background/ParallaxBackground/ParallaxLayer"]
+modulate = Color( 0.988235, 0.988235, 0.988235, 1 )
+material = SubResource( 3 )
+scale = Vector2( 8, 5 )
+texture = ExtResource( 6 )
+centered = false
 [connection signal="disable_input" from="UI/DialogBox" to="Player" method="_on_input_disable"]
 [connection signal="enable_input" from="UI/DialogBox" to="Player" method="_on_input_enable"]
 [connection signal="body_entered" from="DialogTrigger" to="DialogTrigger" method="_on_DialogTrigger_body_entered" flags=6]
