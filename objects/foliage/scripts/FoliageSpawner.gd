@@ -1,8 +1,13 @@
 tool
 extends Node2D
 
+
+signal grow_complete
+
 const LIGHT_BOX_BASE_WIDTH = 32.0
 const GRASS_WIDTH = 32.0
+
+const BUBBLE_SIZE_VARIANCE = 0.4
 
 var grass = preload("res://objects/foliage/Grass.tscn")
 var bubble = preload("res://objects/bubble/Bubble.tscn")
@@ -124,6 +129,8 @@ func _process(delta):
 					_spawnDirectional(count, 1)
 				ANCHOR.CENTER:
 					_spawnCenterGrass(count)
+		else:
+			emit_signal("grow_complete")
 
 		bubble_spawn_count += delta * bubbles_per_second
 		if bubble_spawn_count >= 1.0:
@@ -149,6 +156,7 @@ func _spawn_bubble():
 			posx += rand_range(-(area*0.5), area*0.5)
 	b.position.x = posx
 	b.position.y = global_position.y - bg_y_offset
+	b.size_variance = BUBBLE_SIZE_VARIANCE
 	bg_container.add_child(b)
 	
 

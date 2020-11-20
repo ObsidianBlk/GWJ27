@@ -27,5 +27,4 @@ func handle_physics(delta):
 		return
 	
 	host.gravity(delta)
-	host.move(delta, _get_direction())
-	var res = host.update_velocity()
+	_move(delta)

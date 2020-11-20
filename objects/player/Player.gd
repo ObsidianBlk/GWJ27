@@ -10,13 +10,36 @@ var gravity = 0
 var speed = 0
 var velocity = Vector2.ZERO
 
+onready var bookContainer_node = $Character/Polygons/HandR/BookContainer
+onready var handBone_node = $Character/Skeleton2D/Hip/Chest/ArmR/ForearmR/HandR
+onready var bookContainer_localX_offset = bookContainer_node.position.x
+var bookContainer_pos_offset = Vector2.ZERO
+var bookContainer_rot_offset = Vector2.ZERO
+
 
 func _ready():
 	var pre_gravity = (2.0 * jump_unit_height)/(jump_max_seconds * jump_max_seconds)
 	gravity = pre_gravity * pixels_per_unit
 	jump_power = sqrt(2 * pre_gravity * jump_unit_height) * pixels_per_unit
 	speed = units_per_second * pixels_per_unit
+	
+	bookContainer_pos_offset = handBone_node.global_position - bookContainer_node.global_position
+	bookContainer_rot_offset = handBone_node.global_rotation - bookContainer_node.global_rotation
 
+func _process(delta):
+	bookContainer_node.global_position = handBone_node.global_position - bookContainer_pos_offset
+	bookContainer_node.global_rotation = handBone_node.global_rotation - bookContainer_rot_offset
+	if $Character.scale.x < 0:
+		bookContainer_node.position.x += bookContainer_localX_offset 
+
+func attach_book(book : Node2D):
+	if not book_attached():
+		book.get_parent().remove_child(book)
+		book.position = Vector2.ZERO
+		bookContainer_node.add_child(book)
+
+func book_attached():
+	return bookContainer_node.get_child_count() > 0
 
 func get_facing():
 	if $Character.scale.x < 0:

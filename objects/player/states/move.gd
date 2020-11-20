@@ -29,15 +29,19 @@ func handle_physics(delta):
 	if _jumping():
 		return
 	
+	_move(delta, true)
+
+func _move(delta, snap = false):
 	var dir = _get_direction()
 	if dir != 0:
 		host.move(delta, dir)
-		var res = host.update_velocity(true)
-		if res.x == 0:
-			host.velocity.x = 0
 	else:
 		host.velocity.x = 0
-
+		
+	var res = host.update_velocity(snap)
+	if res.x == 0:
+		host.velocity.x = 0
+	return res
 
 func _jumping():
 	if Input.is_action_just_pressed("move_up"):
